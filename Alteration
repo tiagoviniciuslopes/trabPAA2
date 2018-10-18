@@ -1,0 +1,5 @@
+Alteração
+	add
+	graphProfundidade.cpp:66 -> visit(start);
+	rm - loop
+	graphProfundidade.cpp:68
