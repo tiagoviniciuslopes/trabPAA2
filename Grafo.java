@@ -5,7 +5,7 @@ import java.util.*;
 public class Grafo{
 	ArrayList<No> nos;  // todos os vértices do grafo
 	Boolean orientado; // true: é orientado
-	int numVertex; // true: é orientado
+	Integer numVertex; // true: é orientado
 
 	public Grafo(){
 		nos = new ArrayList<No>();
@@ -19,11 +19,11 @@ public class Grafo{
 		return orientado;	
 	}
 
-	public void setNumVertex(int numVertex){
+	public void setNumVertex(Integer numVertex){
 		this.numVertex = numVertex;
 	}
 
-	public int getNumVertex(){
+	public Integer getNumVertex(){
 		return numVertex;	
 	}
 

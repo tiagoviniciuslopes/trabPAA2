@@ -16,7 +16,7 @@ public class Principal{
             grafo.setOrientado(isOrientado);
 
             line = br.readLine();
-            int numVertex = 0;
+            Integer numVertex = 0;
 
             if(line.contains("{")){
                 line = line.replace("V={","");
@@ -38,12 +38,21 @@ public class Principal{
 
             line = br.readLine();
             while (line != null) {
-                System.out.println(line);
-
                 String[] half = line.split(":");
 
                 String caminho = half[0];
                 String peso = half[1];
+
+                caminho = caminho.replace("(","");
+                caminho = caminho.replace(")","");
+
+                String[] fromTo = caminho.split(",");
+
+                Integer from = Integer.parseInt(fromTo[0]);
+                Integer to = Integer.parseInt(fromTo[1]);
+                System.out.println("from:"+from);
+                System.out.println("to:"+to);
+                
 
                 line = br.readLine();
             }
