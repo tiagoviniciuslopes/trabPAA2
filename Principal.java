@@ -41,18 +41,22 @@ public class Principal{
                 String[] half = line.split(":");
 
                 String caminho = half[0];
-                String peso = half[1];
+                String descricao = half[1];
 
                 caminho = caminho.replace("(","");
                 caminho = caminho.replace(")","");
 
                 String[] fromTo = caminho.split(",");
-
+                String[] desc = descricao.split(",");                
+                
                 Integer from = Integer.parseInt(fromTo[0]);
                 Integer to = Integer.parseInt(fromTo[1]);
-                System.out.println("from:"+from);
-                System.out.println("to:"+to);
                 
+                Integer peso = Integer.parseInt(desc[0]);
+                String label = desc[1];
+                
+                // tudo funfando aqui, só montar o grafo com from,to,peso,label
+                // arrumar -> label pode ser nulo e testar se peso negativo funciona
 
                 line = br.readLine();
             }
