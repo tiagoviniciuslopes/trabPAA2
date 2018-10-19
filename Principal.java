@@ -1,6 +1,14 @@
+import java.io.*;
+import java.util.*;
+
 public class Principal{
 
     public static void main(String args[]) throws Exception{
+
+        Grafo teste = new Grafo();
+
+        teste = le_grafo("inputs/grafo1.txt");
+
         Grafo grafo = new Grafo();
         No a = new No();
         No b = new No();
@@ -38,4 +46,26 @@ public class Principal{
         grafo.buscaLargura("b");
     }
 
+    public static Grafo le_grafo(String arquivo) throws Exception{
+        BufferedReader br = new BufferedReader(new FileReader(arquivo));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+
+                System.out.println(line);
+
+                line = br.readLine();
+            }
+            String everything = sb.toString();
+        } finally {
+            br.close();
+        }
+
+        Grafo grafo = new Grafo();
+        return grafo; 
+    }
 }
