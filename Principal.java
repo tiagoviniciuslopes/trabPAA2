@@ -153,8 +153,8 @@ public class Principal{
                     break;
 
                 case "2":
-
-                    // https://www.youtube.com/watch?v=_0zQh_jtIsE&list=PLSVAhOzzve5Irl93Oa35RIYtcMD6ilNSz&index=1
+                    // https://www.youtube.com/watch?v=Ti2Br2Pq_A4
+                    // https://github.com/nidi3/graphviz-java
                     break;
 
                 case "3":
