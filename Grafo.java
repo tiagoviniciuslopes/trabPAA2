@@ -1,10 +1,17 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Grafo{
 	ArrayList<No> nos;  // todos os vértices do grafo
 
 	public Grafo(){
 		nos = new ArrayList<No>();
+	}
+
+	public void unvisit(){
+		for(No no:nos){
+			no.visitado = -1;
+		}
 	}
 
 	public void add(No no){
@@ -49,6 +56,29 @@ public class Grafo{
 			}
 
 			inicio.visitado = 1;
+		}
+	}
+
+	public void buscaLargura(String nome) throws Exception{
+		LinkedList<No> fila = new LinkedList<No>();
+		fila.offer(inicio(nome));
+		buscaLargura(fila);
+	}
+
+	public void buscaLargura(LinkedList<No> fila) throws Exception{
+		No aux = fila.poll();
+		
+		if(aux != null && aux.visitado == -1){
+			aux.visitado = 0;
+	
+			System.out.println(aux.nome);
+
+			for(Incidencia in : aux.incidencias){
+				if(in.no != null) fila.offer(in.no);
+			}
+
+			buscaLargura(fila);
+			aux.visitado = 1;
 		}
 	}
 }

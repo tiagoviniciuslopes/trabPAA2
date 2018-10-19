@@ -1,6 +1,6 @@
 public class Principal{
 
-    public static void main(String args[]){
+    public static void main(String args[]) throws Exception{
         Grafo grafo = new Grafo();
         No a = new No();
         No b = new No();
@@ -32,6 +32,10 @@ public class Principal{
         grafo.add(d);
         
         grafo.buscaProfundidade("b");
+
+        System.out.println("------------------------");
+        grafo.unvisit();
+        grafo.buscaLargura("b");
     }
 
 }
