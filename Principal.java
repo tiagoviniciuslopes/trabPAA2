@@ -26,6 +26,7 @@ public class Principal{
                 
                 for (String part: parts) {
                     // aqui eu pego os label dos vertices
+                    // pegaralbel
                     numVertex++;          
                 }
             }else{
@@ -35,14 +36,18 @@ public class Principal{
 
             grafo.setNumVertex(numVertex);
 
-            /*
-            //percorre todos os vertices
+            line = br.readLine();
             while (line != null) {
                 System.out.println(line);
-                line = br.readLine();
 
+                String[] half = line.split(":");
+
+                String caminho = half[0];
+                String peso = half[1];
+
+                line = br.readLine();
             }
-            */
+
         } catch (Exception e){
             System.out.println(e.getMessage());
         } finally {
@@ -85,9 +90,10 @@ public class Principal{
         grafo.add(d);
         
 
-
+        Grafo teste = new Grafo();
+                    
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String opcao;
+        String opcao,vertex;
             
         while(true){
             System.out.println("         *---------------------------*");
@@ -115,34 +121,51 @@ public class Principal{
             switch(opcao){
                 case "1":
 
-                    Grafo teste = new Grafo();
-                    teste = carregar_grafo("inputs/grafo3.txt");
+                    System.out.println("Entre com o nome do arquivo: ");
+                    String arq = reader.readLine().trim();
+                        
+                    // so pra n ter q escrever o nome toda hr                
+                    if(arq.isEmpty()){
+                        arq = "grafo1.txt";//entrar com o teste
+                    }
+
+                    teste = carregar_grafo("inputs/"+arq);
+
                     System.out.println("É orientado? "+teste.getOrientado());
                     System.out.println("Num Vertices: "+teste.getNumVertex());
+
+                    System.out.println("\nGrafo carregado!");
+                    reader.readLine();
 
                     break;
 
                 case "2":
 
-
+                    // https://www.youtube.com/watch?v=_0zQh_jtIsE&list=PLSVAhOzzve5Irl93Oa35RIYtcMD6ilNSz&index=1
                     break;
 
                 case "3":
 
-                    System.out.println("|- BUSCA EM PROFUNDIDADE -|\n");
-                    grafo.buscaProfundidade("b");
+                    System.out.println("Qual vertice?");
+                    vertex = reader.readLine().trim();
+
+                    System.out.println("\n|- BUSCA EM PROFUNDIDADE -|\n");
+                    grafo.buscaProfundidade(vertex);
                     
-                    System.out.println();
+                    System.out.println("\n\nPressione qualquer tecla para continuar...");
                     reader.readLine();
 
                     break;
 
                 case "4":
+
+                    System.out.println("Qual vertice?");
+                    vertex = reader.readLine().trim();
+
+                    System.out.println("\n|- BUSCA EM LARGURA -|\n");
+                    grafo.buscaLargura(vertex);
                     
-                    System.out.println("|- BUSCA EM LARGURA -|\n");
-                    grafo.buscaLargura("b");
-                    
-                    System.out.println();
+                    System.out.println("\n\nPressione qualquer tecla para continuar...");
                     reader.readLine();
                     
                     break;

@@ -68,7 +68,7 @@ public class Grafo{
 		if(inicio != null && inicio.visitado == -1){
 			inicio.visitado = 0;
 
-			System.out.println(inicio.nome);
+			System.out.print("["+ inicio.nome + "] -> ");
 
 			for(Incidencia in : inicio.incidencias){
 				buscaProfundidade(in.no);
@@ -90,7 +90,7 @@ public class Grafo{
 		if(aux != null && aux.visitado == -1){
 			aux.visitado = 0;
 	
-			System.out.println(aux.nome);
+			System.out.print("["+ aux.nome + "] -> ");
 
 			for(Incidencia in : aux.incidencias){
 				if(in.no != null) fila.offer(in.no);
