@@ -102,10 +102,46 @@ public class Grafo{
 	}
 
 	public void inicializaCaminhos(No src){
-		for(No no : nos){  
-			if(!no.nome.equals(src.nome)) 
-				src.caminhos.put(no, src.infinito);
+		for(No no : nos){	 
+			src.caminhos.put(no, src.infinito);
 		}
 		src.caminhos.put(src, 0);
+	}
+
+	public void bellmanFord(String nome){
+		No aux = find(nome);
+		LinkedList<No> fila = new LinkedList<No>();
+		fila.offer(aux);
+
+		bellmanFord(fila);
+
+		for(No no : nos){
+			if(aux.caminhos.get(no) < 10000 && aux.caminhos.get(no) > 0)
+				System.out.println("No: " + no.nome + "          Distancia: " + aux.caminhos.get(no));
+		}
+	}
+
+	private void bellmanFord(LinkedList<No> fila) {
+		No aux = fila.poll();
+
+		if(aux != null && aux.visitado == -1){
+			aux.visitado = 0;
+			inicializaCaminhos(aux);
+
+			for(Incidencia incidencia : aux.incidencias){
+				aux.caminhos.put(incidencia.no,incidencia.peso);
+				fila.offer(incidencia.no);
+			}
+			bellmanFord(fila);
+			aux.visitado = 1;
+		}
+
+		for(Incidencia incidencia : aux.incidencias){
+			No inc = incidencia.no;
+			for(No no : nos){
+				if(!inc.nome.equals(no.nome) && ((inc.caminhos.get(no)+aux.caminhos.get(inc)) < aux.caminhos.get(no)))
+					aux.caminhos.put(no,inc.caminhos.get(no)+aux.caminhos.get(inc));
+			}
+		}
 	}
 }
