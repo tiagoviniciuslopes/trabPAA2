@@ -156,14 +156,7 @@ public class Principal{
 
                     grafo = new Grafo();
                     grafo = carregar_grafo("inputs/"+arq);
-<<<<<<< HEAD
-=======
-
-                    for (No no: grafo.nos) {
-                      System.out.printf("no %s\n", no.nome);
-                    }
->>>>>>> master
-
+                    
                     System.out.println("\nGrafo carregado!");
                     reader.readLine();
 
