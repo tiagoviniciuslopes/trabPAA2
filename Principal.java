@@ -46,7 +46,6 @@ public class Principal{
 
             grafo.setNumVertex(numVertex);
 
-            // tem que fazer funcionar com label tb
             // popula o grafo com os nos
             for(int i = 0; i < numVertex ; ++i){
                No no = new No();
@@ -99,9 +98,7 @@ public class Principal{
                     No no2 = grafo.nos.get(to);
                     no2.incidencias.add(incid2);
                 }
-
-                // arrumar -> label pode ser nulo e testar se peso negativo funciona
-
+                
                 line = br.readLine();
             }
 
