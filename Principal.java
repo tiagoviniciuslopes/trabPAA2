@@ -70,7 +70,7 @@ public class Principal{
                 int to = Integer.parseInt(fromTo[1]);
                 
                 int peso;
-                String label = "NUL";
+                String label = "";
 
                 if(descricao.contains(",")){
                     String[] desc = descricao.split(",");
