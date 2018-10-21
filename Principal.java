@@ -7,7 +7,7 @@ public class Principal{
         BufferedReader br = new BufferedReader(new FileReader(arquivo));
         
         Grafo grafo = new Grafo();
-        
+
         try {
             String line = null;
 
@@ -18,6 +18,7 @@ public class Principal{
             line = br.readLine();
             int numVertex = 0;
 
+            // teste se tem label ou se é só um int os vertices
             if(line.contains("{")){
                 line = line.replace("V={","");
                 line = line.replace("}","");
@@ -25,13 +26,22 @@ public class Principal{
                 String[] parts = line.split(",");
                 
                 for (String part: parts) {
-                    // aqui eu pego os label dos vertices
-                    // pegaralbel
+
+                    No no = new No();
+                    no.nome = part;
+                    grafo.add(no);
+
                     numVertex++;          
                 }
             }else{
                 line = line.replace("V=","");
                 numVertex = Integer.parseInt(line);
+
+                for(int i = 0; i < numVertex ; ++i){
+                   No no = new No();
+                   no.nome = String.valueOf(i);
+                   grafo.add(no);
+                }
             }
 
             grafo.setNumVertex(numVertex);
@@ -46,16 +56,42 @@ public class Principal{
                 caminho = caminho.replace("(","");
                 caminho = caminho.replace(")","");
 
-                String[] fromTo = caminho.split(",");
-                String[] desc = descricao.split(",");                
+                String[] fromTo = caminho.split(",");          
                 
                 int from = Integer.parseInt(fromTo[0]);
                 int to = Integer.parseInt(fromTo[1]);
                 
-                int peso = Integer.parseInt(desc[0]);
-                String label = desc[1];
+                int peso;
+                String label = "NUL";
+
+                if(descricao.contains(",")){
+                    String[] desc = descricao.split(",");
+                    peso = Integer.parseInt(desc[0]);
+                    label = desc[1];
+                }else{
+                    peso = Integer.parseInt(descricao);
+                }
                 
-                // tudo funfando aqui, só montar o grafo com from,to,peso,label
+                // adiciona incidencia
+                Incidencia incid = new Incidencia();
+                incid.no = grafo.find(String.valueOf(to));
+                incid.peso = peso;
+                incid.label = label;
+
+                No no = grafo.nos.get(from);
+                no.incidencias.add(incid);
+
+                // grafo n orientado, deve ter duas incidencias
+                if(!isOrientado){
+                    Incidencia incid2 = new Incidencia();
+                    incid2.no = grafo.find(String.valueOf(from));
+                    incid2.peso = peso;
+                    incid2.label = label;
+
+                    No no2 = grafo.nos.get(to);
+                    no2.incidencias.add(incid2);
+                }
+
                 // arrumar -> label pode ser nulo e testar se peso negativo funciona
 
                 line = br.readLine();
@@ -71,39 +107,7 @@ public class Principal{
 
     private static void menu() throws Exception{ 
 
-        //isso vai sair daqui
         Grafo grafo = new Grafo();
-        No a = new No();
-        No b = new No();
-        No c = new No();
-        No d = new No();
-
-        a.nome = "a";
-        b.nome = "b";
-        c.nome = "c";
-        d.nome = "d";
-
-        Incidencia emA = new Incidencia();
-        emA.no = a;
-        emA.peso = 0;
-        Incidencia emC = new Incidencia();
-        emC.no = c;
-        emC.peso = 0;
-        Incidencia emD = new Incidencia();
-        emD.no = d;
-        emD.peso = 0;
-
-        b.incidencias.add(emC);
-        b.incidencias.add(emD);
-        c.incidencias.add(emA);
-
-        grafo.add(a);
-        grafo.add(b);
-        grafo.add(c);
-        grafo.add(d);
-        
-
-        Grafo teste = new Grafo();
                     
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String opcao,vertex;
@@ -142,10 +146,8 @@ public class Principal{
                         arq = "grafo1.txt";//entrar com o teste
                     }
 
-                    teste = carregar_grafo("inputs/"+arq);
-
-                    System.out.println("É orientado? "+teste.getOrientado());
-                    System.out.println("Num Vertices: "+teste.getNumVertex());
+                    grafo = new Grafo();
+                    grafo = carregar_grafo("inputs/"+arq);
 
                     System.out.println("\nGrafo carregado!");
                     reader.readLine();
@@ -165,6 +167,7 @@ public class Principal{
                     System.out.println("\n|- BUSCA EM PROFUNDIDADE -|\n");
                     grafo.buscaProfundidade(vertex);
                     
+                    grafo.unvisit();
                     System.out.println("\n\nPressione qualquer tecla para continuar...");
                     reader.readLine();
 
@@ -178,6 +181,7 @@ public class Principal{
                     System.out.println("\n|- BUSCA EM LARGURA -|\n");
                     grafo.buscaLargura(vertex);
                     
+                    grafo.unvisit();
                     System.out.println("\n\nPressione qualquer tecla para continuar...");
                     reader.readLine();
                     
@@ -200,8 +204,6 @@ public class Principal{
                 default:
                     System.out.println("Opção Inválida!\n");
             }
-
-            grafo.unvisit();
         }
     }
 
