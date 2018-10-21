@@ -184,6 +184,16 @@ public class Principal{
                     break;
 
                 case "5":
+
+                    System.out.println("Qual vertice?");
+                    vertex = reader.readLine().trim();
+
+                    System.out.println("\n|- BELLMAN FORD -|\n");
+                    grafo.bellmanFord(vertex);
+                    
+                    System.out.println("\n\nPressione qualquer tecla para continuar...");
+                    reader.readLine();
+
                     break;
 
                 case "6":
