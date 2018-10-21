@@ -46,6 +46,14 @@ public class Principal{
 
             grafo.setNumVertex(numVertex);
 
+            // tem que fazer funcionar com label tb
+            // popula o grafo com os nos
+            for(int i = 0; i < numVertex ; ++i){
+               No no = new No();
+               no.nome = String.valueOf(i);
+               grafo.add(no);
+            }
+
             line = br.readLine();
             while (line != null) {
                 String[] half = line.split(":");
@@ -143,11 +151,18 @@ public class Principal{
                         
                     // so pra n ter q escrever o nome toda hr                
                     if(arq.isEmpty()){
-                        arq = "grafo1.txt";//entrar com o teste
+                        arq = "grafo6.txt";//entrar com o teste
                     }
 
                     grafo = new Grafo();
                     grafo = carregar_grafo("inputs/"+arq);
+<<<<<<< HEAD
+=======
+
+                    for (No no: grafo.nos) {
+                      System.out.printf("no %s\n", no.nome);
+                    }
+>>>>>>> master
 
                     System.out.println("\nGrafo carregado!");
                     reader.readLine();
