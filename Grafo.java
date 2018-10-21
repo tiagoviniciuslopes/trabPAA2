@@ -5,7 +5,7 @@ import java.util.*;
 public class Grafo{
 	ArrayList<No> nos;  // todos os vértices do grafo
 	Boolean orientado; // true: é orientado
-	Integer numVertex; // true: é orientado
+	int numVertex;
 
 	public Grafo(){
 		nos = new ArrayList<No>();
@@ -19,11 +19,11 @@ public class Grafo{
 		return orientado;	
 	}
 
-	public void setNumVertex(Integer numVertex){
+	public void setNumVertex(int numVertex){
 		this.numVertex = numVertex;
 	}
 
-	public Integer getNumVertex(){
+	public int getNumVertex(){
 		return numVertex;	
 	}
 
@@ -51,7 +51,7 @@ public class Grafo{
 		return nos.get(nos.size()-1);
 	}
 
-	public No inicio(String nome){
+	public No find(String nome){
 		for(No no : nos){ //Escolhe o no onde vai começar a busca 
 			if(no.nome.equals(nome))
 				return no;
@@ -60,27 +60,27 @@ public class Grafo{
 	}
 
 	public void buscaProfundidade(String nome){
-		No inicio = inicio(nome);
-		buscaProfundidade(inicio);
+		No find = find(nome);
+		buscaProfundidade(find);
 	}
 
-	public void buscaProfundidade(No inicio){
-		if(inicio != null && inicio.visitado == -1){
-			inicio.visitado = 0;
+	public void buscaProfundidade(No find){
+		if(find != null && find.visitado == -1){
+			find.visitado = 0;
 
-			System.out.print("["+ inicio.nome + "] -> ");
+			System.out.print("["+ find.nome + "] -> ");
 
-			for(Incidencia in : inicio.incidencias){
+			for(Incidencia in : find.incidencias){
 				buscaProfundidade(in.no);
 			}
 
-			inicio.visitado = 1;
+			find.visitado = 1;
 		}
 	}
 
 	public void buscaLargura(String nome) throws Exception{
 		LinkedList<No> fila = new LinkedList<No>();
-		fila.offer(inicio(nome));
+		fila.offer(find(nome));
 		buscaLargura(fila);
 	}
 
