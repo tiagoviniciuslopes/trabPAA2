@@ -100,4 +100,12 @@ public class Grafo{
 			aux.visitado = 1;
 		}
 	}
+
+	public void inicializaCaminhos(No src){
+		for(No no : nos){  
+			if(!no.nome.equals(src.nome)) 
+				src.caminhos.put(no, src.infinito);
+		}
+		src.caminhos.put(src, 0);
+	}
 }
