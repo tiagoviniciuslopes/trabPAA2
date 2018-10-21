@@ -26,18 +26,26 @@ public class Principal{
                 String[] parts = line.split(",");
                 
                 for (String part: parts) {
-                    // aqui eu pego os label dos vertices
-                    // pegaralbel
+
+                    No no = new No();
+                    no.nome = part;
+                    grafo.add(no);
+
                     numVertex++;          
                 }
             }else{
                 line = line.replace("V=","");
                 numVertex = Integer.parseInt(line);
+
+                for(int i = 0; i < numVertex ; ++i){
+                   No no = new No();
+                   no.nome = String.valueOf(i);
+                   grafo.add(no);
+                }
             }
 
             grafo.setNumVertex(numVertex);
 
-            // tem que fazer funcionar com label tb
             // popula o grafo com os nos
             for(int i = 0; i < numVertex ; ++i){
                No no = new No();
@@ -55,14 +63,21 @@ public class Principal{
                 caminho = caminho.replace("(","");
                 caminho = caminho.replace(")","");
 
-                String[] fromTo = caminho.split(",");
-                String[] desc = descricao.split(",");                
+                String[] fromTo = caminho.split(",");          
                 
                 int from = Integer.parseInt(fromTo[0]);
                 int to = Integer.parseInt(fromTo[1]);
                 
-                int peso = Integer.parseInt(desc[0]);
-                String label = desc[1];
+                int peso;
+                String label = "";
+
+                if(descricao.contains(",")){
+                    String[] desc = descricao.split(",");
+                    peso = Integer.parseInt(desc[0]);
+                    label = desc[1];
+                }else{
+                    peso = Integer.parseInt(descricao);
+                }
                 
                 // adiciona incidencia
                 Incidencia incid = new Incidencia();
@@ -83,9 +98,7 @@ public class Principal{
                     No no2 = grafo.nos.get(to);
                     no2.incidencias.add(incid2);
                 }
-
-                // arrumar -> label pode ser nulo e testar se peso negativo funciona
-
+                
                 line = br.readLine();
             }
 
@@ -140,11 +153,7 @@ public class Principal{
 
                     grafo = new Grafo();
                     grafo = carregar_grafo("inputs/"+arq);
-
-                    for (No no: grafo.nos) {
-                      System.out.printf("no %s\n", no.nome);
-                    }
-
+                    
                     System.out.println("\nGrafo carregado!");
                     reader.readLine();
 
