@@ -18,6 +18,8 @@ public class Principal{
             line = br.readLine();
             int numVertex = 0;
 
+            ArrayList<String> labels = new ArrayList<String>();
+
             // teste se tem label ou se é só um int os vertices
             if(line.contains("{")){
                 line = line.replace("V={","");
@@ -30,6 +32,7 @@ public class Principal{
                     No no = new No();
                     no.nome = part;
                     grafo.add(no);
+                    labels.add(part);
 
                     numVertex++;          
                 }
@@ -37,21 +40,15 @@ public class Principal{
                 line = line.replace("V=","");
                 numVertex = Integer.parseInt(line);
 
-                for(int i = 0; i < numVertex ; ++i){
+                for(int i = 0; i < numVertex ; i++){
                    No no = new No();
                    no.nome = String.valueOf(i);
                    grafo.add(no);
+                   labels.add(String.valueOf(i));
                 }
             }
 
             grafo.setNumVertex(numVertex);
-
-            // popula o grafo com os nos
-            for(int i = 0; i < numVertex ; ++i){
-               No no = new No();
-               no.nome = String.valueOf(i);
-               grafo.add(no);
-            }
 
             line = br.readLine();
             while (line != null) {
@@ -81,24 +78,24 @@ public class Principal{
                 
                 // adiciona incidencia
                 Incidencia incid = new Incidencia();
-                incid.no = grafo.find(String.valueOf(to));
+                incid.no = grafo.find(labels.get(to));
                 incid.peso = peso;
                 incid.label = label;
 
-                No no = grafo.nos.get(from);
+                No no = grafo.find(labels.get(from));
                 no.incidencias.add(incid);
-
+                
                 // grafo n orientado, deve ter duas incidencias
                 if(!isOrientado){
                     Incidencia incid2 = new Incidencia();
-                    incid2.no = grafo.find(String.valueOf(from));
+                    incid2.no = grafo.find(labels.get(from));
                     incid2.peso = peso;
                     incid2.label = label;
 
-                    No no2 = grafo.nos.get(to);
+                    No no2 = grafo.find(labels.get(to));
                     no2.incidencias.add(incid2);
                 }
-                
+
                 line = br.readLine();
             }
 
@@ -148,7 +145,7 @@ public class Principal{
                         
                     // so pra n ter q escrever o nome toda hr                
                     if(arq.isEmpty()){
-                        arq = "grafo6.txt";//entrar com o teste
+                        arq = "grafo3.txt";//entrar com o teste
                     }
 
                     grafo = new Grafo();

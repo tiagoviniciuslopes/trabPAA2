@@ -1,4 +1,4 @@
-orientado=sim
+orientado=nao
 V={Gal Costa,Tom Jobim,Nara Leao,Milton Nascimento,Chico Buarque,Elis Regina,Gilberto Gil,Marisa Monte,Joao Bosco,Clara Nunes}
 (0,1):15,a
 (0,2):11,b
