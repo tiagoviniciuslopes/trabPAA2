@@ -16,7 +16,7 @@ public class Principal{
             grafo.setOrientado(isOrientado);
 
             line = br.readLine();
-            Integer numVertex = 0;
+            int numVertex = 0;
 
             if(line.contains("{")){
                 line = line.replace("V={","");
@@ -49,10 +49,10 @@ public class Principal{
                 String[] fromTo = caminho.split(",");
                 String[] desc = descricao.split(",");                
                 
-                Integer from = Integer.parseInt(fromTo[0]);
-                Integer to = Integer.parseInt(fromTo[1]);
+                int from = Integer.parseInt(fromTo[0]);
+                int to = Integer.parseInt(fromTo[1]);
                 
-                Integer peso = Integer.parseInt(desc[0]);
+                int peso = Integer.parseInt(desc[0]);
                 String label = desc[1];
                 
                 // tudo funfando aqui, só montar o grafo com from,to,peso,label
