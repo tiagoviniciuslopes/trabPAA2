@@ -147,13 +147,21 @@ public class Grafo{
 	}
 
 	public void geraDot() throws Exception{
-		StringBuffer dot = new StringBuffer("digraph G {\n");
+		StringBuffer dot;
+		String seta;
+		if(orientado){
+			dot  = new StringBuffer("digraph G {\n");
+			seta = new String(" -> ");
+		}else{
+			dot  = new StringBuffer("graph G {\n");
+			seta = new String(" -- ");
+		}
 
 		for(No no : nos){
 			for(Incidencia incidencia : no.incidencias){
 				dot.append("\t");
 				dot.append(no.nome.replaceAll("\\s",""));
-				dot.append(" -> ");
+				dot.append(seta);
 				dot.append(incidencia.no.nome.replaceAll("\\s",""));
 				dot.append(" [label=\"");
 				dot.append(incidencia.peso);
