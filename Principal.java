@@ -157,6 +157,7 @@ public class Principal{
                     break;
 
                 case "2":
+                    grafo.geraDot();
                     // https://www.youtube.com/watch?v=Ti2Br2Pq_A4
                     // https://github.com/nidi3/graphviz-java
                     break;
