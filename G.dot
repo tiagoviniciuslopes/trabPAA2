@@ -1,7 +1,37 @@
-digraph G {
-	0 -> 1 [label="11'teste'"];
-	1 -> 3 [label="-5'teste'"];
-	2 -> 4 [label="7'teste'"];
-	3 -> 2 [label="8'teste'"];
-	4 -> 2 [label="19'teste'"];
+graph G {
+rankdir=LR
+	GalCosta -- TomJobim [label="15
+'a'"];
+	GalCosta -- NaraLeao [label="11
+'b'"];
+	GalCosta -- JoaoBosco [label="20
+'c'"];
+	NaraLeao -- MiltonNascimento [label="2
+'d'"];
+	NaraLeao -- JoaoBosco [label="1
+'e'"];
+	MiltonNascimento -- GalCosta [label="3
+'f'"];
+	MiltonNascimento -- TomJobim [label="1
+'g'"];
+	MiltonNascimento -- ChicoBuarque [label="7
+'h'"];
+	MiltonNascimento -- GilbertoGil [label="2
+'i'"];
+	MiltonNascimento -- MarisaMonte [label="5
+'j'"];
+	ChicoBuarque -- ElisRegina [label="3
+'k'"];
+	ElisRegina -- GilbertoGil [label="1
+'l'"];
+	ElisRegina -- MiltonNascimento [label="1
+'m'"];
+	GilbertoGil -- ElisRegina [label="3
+'n'"];
+	GilbertoGil -- ClaraNunes [label="5
+'o'"];
+	MarisaMonte -- JoaoBosco [label="6
+'p'"];
+	JoaoBosco -- MarisaMonte [label="2
+'q'"];
 }

@@ -81,6 +81,7 @@ public class Principal{
                 incid.no = grafo.find(labels.get(to));
                 incid.peso = peso;
                 incid.label = label;
+                incid.duplicate = false;
 
                 No no = grafo.find(labels.get(from));
                 no.incidencias.add(incid);
@@ -91,6 +92,7 @@ public class Principal{
                     incid2.no = grafo.find(labels.get(from));
                     incid2.peso = peso;
                     incid2.label = label;
+                    incid2.duplicate = true;
 
                     No no2 = grafo.find(labels.get(to));
                     no2.incidencias.add(incid2);
@@ -102,9 +104,9 @@ public class Principal{
         } catch (Exception e){
             System.out.println(e.getMessage());
         } finally {
-            br.close(); 
-            return grafo; 
+            br.close();
         }
+        return grafo; 
     }
 
     private static void menu() throws Exception{ 
@@ -158,11 +160,8 @@ public class Principal{
 
                 case "2":
                     grafo.geraDot();
-
-                    System.out.println("\nGrafo gerado!");
+                    System.out.println("Grafo gerado!");
                     reader.readLine();
-                    // https://www.youtube.com/watch?v=Ti2Br2Pq_A4
-                    // https://github.com/nidi3/graphviz-java
                     break;
 
                 case "3":
@@ -203,13 +202,25 @@ public class Principal{
                     
                     System.out.println("\n\nPressione qualquer tecla para continuar...");
                     reader.readLine();
-
+                    
                     break;
 
                 case "6":
+                    
+                    System.out.println("Vertice Origem: ");
+                    vertex = reader.readLine().trim();
+
+                    System.out.println("\n|- KRUSKAL -|\n");
+                    //grafo.kruskal();
+                    
+                    System.out.println("\n\nPressione qualquer tecla para continuar...");
+                    reader.readLine();
                     break;
 
                 case "7":
+
+                    System.out.println("\n\nPressione qualquer tecla para continuar...");
+                    reader.readLine();
                     break;
 
                 case "0":
