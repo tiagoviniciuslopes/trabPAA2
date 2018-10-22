@@ -145,7 +145,7 @@ public class Principal{
                         
                     // so pra n ter q escrever o nome toda hr                
                     if(arq.isEmpty()){
-                        arq = "grafo3.txt";//entrar com o teste
+                        arq = "grafo1.txt";//entrar com o teste
                     }
 
                     grafo = new Grafo();
@@ -158,6 +158,9 @@ public class Principal{
 
                 case "2":
                     grafo.geraDot();
+
+                    System.out.println("\nGrafo gerado!");
+                    reader.readLine();
                     // https://www.youtube.com/watch?v=Ti2Br2Pq_A4
                     // https://github.com/nidi3/graphviz-java
                     break;
