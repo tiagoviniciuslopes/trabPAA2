@@ -87,19 +87,21 @@ public class Grafo{
 
 	public void buscaLargura(LinkedList<No> fila) throws Exception{
 		No aux = fila.poll();
-		
+
 		if(aux != null && aux.visitado == -1){
 			aux.visitado = 0;
 	
 			System.out.print("["+ aux.nome + "] -> ");
 
 			for(Incidencia in : aux.incidencias){
-				if(in.no != null) fila.offer(in.no);
+				if(in.no != null && !fila.contains(in.no)){
+					fila.offer(in.no);
+				}
 			}
 
 			buscaLargura(fila);
-			aux.visitado = 1;
 		}
+		aux.visitado = 1;
 	}
 
 	public void inicializaCaminhos(No src){
