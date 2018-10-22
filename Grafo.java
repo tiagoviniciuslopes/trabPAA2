@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.lang.StringBuffer;
 
 
 public class Grafo{
@@ -143,5 +144,37 @@ public class Grafo{
 					aux.caminhos.put(no,inc.caminhos.get(no)+aux.caminhos.get(inc));
 			}
 		}
+	}
+
+	public void geraDot() throws Exception{
+		StringBuffer dot;
+		String seta;
+		if(orientado){
+			dot  = new StringBuffer("digraph G {\n");
+			seta = new String(" -> ");
+		}else{
+			dot  = new StringBuffer("graph G {\n");
+			seta = new String(" -- ");
+		}
+
+		for(No no : nos){
+			for(Incidencia incidencia : no.incidencias){
+				dot.append("\t");
+				dot.append(no.nome.replaceAll("\\s",""));
+				dot.append(seta);
+				dot.append(incidencia.no.nome.replaceAll("\\s",""));
+				dot.append(" [label=\"");
+				dot.append(incidencia.peso);
+				dot.append("\"];\n");
+			}
+		}
+		dot.append("}\n");
+
+		Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("G.dot"), "utf-8"));
+		writer.write(dot.toString());
+		writer.close();
+
+		Runtime rt = Runtime.getRuntime();
+		Process proc = rt.exec("dot -T png G.dot -o G.png");
 	}
 }
