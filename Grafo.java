@@ -154,19 +154,27 @@ public class Grafo{
 			dot  = new StringBuffer("digraph G {\n");
 			seta = new String(" -> ");
 		}else{
-			dot  = new StringBuffer("strict graph G {\n");
+			dot  = new StringBuffer("graph G {\n");
 			seta = new String(" -- ");
 		}
 
+		dot.append("rankdir=LR\n");
+
 		for(No no : nos){
 			for(Incidencia incidencia : no.incidencias){
-				dot.append("\t");
-				dot.append(no.nome.replaceAll("\\s",""));
-				dot.append(seta);
-				dot.append(incidencia.no.nome.replaceAll("\\s",""));
-				dot.append(" [label=\"");
-				dot.append(incidencia.peso);
-				dot.append("'teste'\"];\n");
+				if(!incidencia.duplicate){
+					dot.append("\t");
+					dot.append(no.nome.replaceAll("\\s",""));
+					dot.append(seta);
+					dot.append(incidencia.no.nome.replaceAll("\\s",""));
+					dot.append(" [label=\"");
+					dot.append(incidencia.peso);
+					dot.append("\n");
+					if(!incidencia.label.isEmpty()){
+						dot.append("'"+incidencia.label+"'");
+					}
+					dot.append("\"];\n");
+				}
 			}
 		}
 		dot.append("}\n");
@@ -177,5 +185,8 @@ public class Grafo{
 
 		Runtime rt = Runtime.getRuntime();
 		Process proc = rt.exec("dot -T png G.dot -o G.png");
+
+		rt.exec("clear");
+		rt.exec("xdg-open G.png");
 	}
 }

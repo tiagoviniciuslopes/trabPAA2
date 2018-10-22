@@ -81,6 +81,7 @@ public class Principal{
                 incid.no = grafo.find(labels.get(to));
                 incid.peso = peso;
                 incid.label = label;
+                incid.duplicate = false;
 
                 No no = grafo.find(labels.get(from));
                 no.incidencias.add(incid);
@@ -91,6 +92,7 @@ public class Principal{
                     incid2.no = grafo.find(labels.get(from));
                     incid2.peso = peso;
                     incid2.label = label;
+                    incid2.duplicate = true;
 
                     No no2 = grafo.find(labels.get(to));
                     no2.incidencias.add(incid2);
@@ -203,7 +205,7 @@ public class Principal{
                     
                     System.out.println("\n\nPressione qualquer tecla para continuar...");
                     reader.readLine();
-
+                    
                     break;
 
                 case "6":
