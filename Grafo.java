@@ -98,7 +98,7 @@ public class Grafo{
 					fila.offer(in.no);
 				}
 			}
-
+			
 			buscaLargura(fila);
 		}
 		aux.visitado = 1;
@@ -115,11 +115,10 @@ public class Grafo{
 		No aux = find(nome);
 		LinkedList<No> fila = new LinkedList<No>();
 		fila.offer(aux);
-
 		bellmanFord(fila);
 
 		for(No no : nos){
-			if(aux.caminhos.get(no) < 10000 && aux.caminhos.get(no) > 0)
+			//if(aux.caminhos.get(no) < 10000 && aux.caminhos.get(no) > 0)
 				System.out.println("No: " + no.nome + "          Distancia: " + aux.caminhos.get(no));
 		}
 	}
@@ -132,18 +131,26 @@ public class Grafo{
 			inicializaCaminhos(aux);
 
 			for(Incidencia incidencia : aux.incidencias){
-				aux.caminhos.put(incidencia.no,incidencia.peso);
-				fila.offer(incidencia.no);
+				if(incidencia.no != null){
+					aux.caminhos.put(incidencia.no,incidencia.peso);
+					if(!fila.contains(incidencia.no)){
+						fila.offer(incidencia.no);
+					}
+				}
 			}
 			bellmanFord(fila);
-			aux.visitado = 1;
 		}
+		aux.visitado = 1;
 
 		for(Incidencia incidencia : aux.incidencias){
 			No inc = incidencia.no;
 			for(No no : nos){
-				if(!inc.nome.equals(no.nome) && ((inc.caminhos.get(no)+aux.caminhos.get(inc)) < aux.caminhos.get(no)))
-					aux.caminhos.put(no,inc.caminhos.get(no)+aux.caminhos.get(inc));
+				if(inc.caminhos.get(no) != inc.infinito && !no.nome.equals(aux.nome)){
+					if((aux.caminhos.get(inc) + inc.caminhos.get(no)) < aux.caminhos.get(no)){
+						aux.caminhos.remove(no);
+						aux.caminhos.put(no,aux.caminhos.get(inc) + inc.caminhos.get(no));
+					}
+				}
 			}
 		}
 	}
