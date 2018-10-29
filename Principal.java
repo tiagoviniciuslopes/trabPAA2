@@ -147,7 +147,7 @@ public class Principal{
                         
                     // so pra n ter q escrever o nome toda hr                
                     if(arq.isEmpty()){
-                        arq = "grafo1.txt";//entrar com o teste
+                        arq = "grafo9.txt";//entrar com o teste
                     }
 
                     grafo = new Grafo();
@@ -207,12 +207,10 @@ public class Principal{
 
                 case "6":
                     
-                    System.out.println("Vertice Origem: ");
-                    vertex = reader.readLine().trim();
-
-                    System.out.println("\n|- KRUSKAL -|\n");
-                    //grafo.kruskal();
+                    System.out.println("\n|- KRUSKAL MST-|\n");
                     
+                    grafo.kruskalMST();
+
                     System.out.println("\n\nPressione qualquer tecla para continuar...");
                     reader.readLine();
                     break;

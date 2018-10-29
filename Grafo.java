@@ -4,6 +4,7 @@ import java.lang.StringBuffer;
 
 
 public class Grafo{
+	
 	ArrayList<No> nos;  // todos os vértices do grafo
 	Boolean orientado; // true: é orientado
 	int numVertex;
@@ -197,5 +198,40 @@ public class Grafo{
 
 		rt.exec("clear");
 		rt.exec("xdg-open G.png");
+	}
+
+	public void printGraph(ArrayList<Edge> edges){
+		for (int i = 0; i <edges.size() ; i++) {
+			Edge edge = edges.get(i);
+			System.out.println(edge.source +" --- "+ edge.destination +" = "+ edge.weight);
+		}
+	}
+
+	public void kruskalMST(){
+
+		ArrayList<Edge> edges = new ArrayList<>();
+		ArrayList<Edge> mst = new ArrayList<>();
+
+		for(int i=0;i<numVertex;i++){
+			for(int j=0;j<nos.get(i).incidencias.size();j++){
+				Edge edge = new Edge(nos.get(i).nome, nos.get(i).incidencias.get(j).no.nome, nos.get(i).incidencias.get(j).peso);
+				if(!nos.get(i).incidencias.get(j).duplicate){
+					edges.add(edge);
+				}
+			}
+		}
+
+		PriorityQueue<Edge> pq = new PriorityQueue<>(edges.size(), Comparator.comparingInt(o -> o.weight));
+
+		Iterator it = prq.iterator();
+
+		System.out.println("Priority queue values are: ");
+		
+		while (it.hasNext()) {
+			System.out.println("Value: "+ it.next().weight); 
+		}
+
+		printGraph(mst);
+
 	}
 }
