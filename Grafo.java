@@ -207,6 +207,21 @@ public class Grafo{
 		}
 	}
 
+	public int findMST(int [] parent, int vertex){
+		//chain of parent pointers from x upwards through the tree
+		// until an element is reached whose parent is itself
+		if(parent[vertex]!=vertex)
+			return findMST(parent, parent[vertex]);;
+		return vertex;
+	}
+
+	public void union(int [] parent, int x, int y){
+		int x_set_parent = findMST(parent, x);
+		int y_set_parent = findMST(parent, y);
+		//make x as parent of y
+		parent[y_set_parent] = x_set_parent;
+	}
+
 	public void kruskalMST(){
 
 		ArrayList<Edge> edges = new ArrayList<>();
@@ -222,15 +237,37 @@ public class Grafo{
 		}
 
 		PriorityQueue<Edge> pq = new PriorityQueue<>(edges.size(), Comparator.comparingInt(o -> o.weight));
-
-		Iterator it = prq.iterator();
-
-		System.out.println("Priority queue values are: ");
 		
-		while (it.hasNext()) {
-			System.out.println("Value: "+ it.next().weight); 
+		for (int i = 0; i <edges.size() ; i++) {
+			pq.add(edges.get(i));
+		}
+		
+		int [] parent = new int[numVertex];
+		for (int i = 0; i <numVertex ; i++) {
+			parent[i] = i;
 		}
 
+		int index = 0;
+		while(index<numVertex-1){
+			Edge edge = pq.remove();
+			//check if adding this edge creates a cycle
+			int x_set = findMST(parent, Integer.parseInt(edge.source));
+			int y_set = findMST(parent, Integer.parseInt(edge.destination));
+
+			if(x_set==y_set){
+				//ignore, will create cycle
+			}else {
+				//add it to our final result
+				mst.add(edge);
+				index++;
+				union(parent,x_set,y_set);
+			}
+		}
+
+		System.out.println("before");
+		printGraph(edges);
+
+		System.out.println("after");
 		printGraph(mst);
 
 	}
