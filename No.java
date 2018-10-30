@@ -8,6 +8,11 @@ public class No{
 	final int infinito = 1000000;
 	Hashtable<No, Integer> caminhos = new Hashtable<No, Integer>();
 
+	//Funcao: adiciona uma incidencia ao no
+	//Entrada: incidencia a ser adicionada
+	//Saida: 
+	//Pre-condicao: um array list de incidencias deve existir
+	//Pos-condicao: a incidencia deve estar incerida no arraylist
 	public void add(Incidencia incidencia){
 		this.incidencias.add(incidencia);
 	}
