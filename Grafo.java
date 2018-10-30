@@ -290,95 +290,98 @@ public class Grafo{
 		rt.exec("xdg-open G.png");
 	}
 
-	//Funcao: 
-	//Entrada: 
+	//Funcao: printa os vertices e pesos de uma lista de adjacencias que representa um grafo
+	//Entrada: lista de adjacencias
 	//Saida: 
-	//Pre-condicao: 
+	//Pre-condicao: lista de adjacencias populada e válida
 	//Pos-condicao: 
 	public void printGraph(ArrayList<Edge> edges){
+		int acum = 0;
 		for (int i = 0; i <edges.size() ; i++) {
 			Edge edge = edges.get(i);
 			System.out.println(edge.source +" --- "+ edge.destination +" = "+ edge.weight);
+			acum += edge.weight;
 		}
+		System.out.println("___________");
+		System.out.println("TOTAL:   "+acum);
 	}
 
-	//Funcao: 
-	//Entrada: 
-	//Saida: 
+	//Funcao: procura o set de um vertice de baixo pra cima até o elemento que o pai seja ele mesmo
+	//Entrada: cadeia de ponteiros pai, vertice a ser procurado
+	//Saida: ponteiro pro elemento, se achado
 	//Pre-condicao: 
 	//Pos-condicao: 
-	public int findMST(int [] parent, int vertex){
-		//chain of parent pointers from x upwards through the tree
-		// until an element is reached whose parent is itself
-		if(parent[vertex]!=vertex)
-			return findMST(parent, parent[vertex]);;
+	public int findMST(int[] parent, int vertex){
+		if(parent[vertex]!=vertex){
+			return findMST(parent, parent[vertex]);
+		}
 		return vertex;
 	}
 
-	//Funcao: 
-	//Entrada: 
+	//Funcao: faz a união de dois sets x e y
+	//Entrada: o vetor de sets pai, set x e set y
 	//Saida: 
 	//Pre-condicao: 
 	//Pos-condicao: 
-	public void union(int [] parent, int x, int y){
+	public void union(int[] parent, int x, int y){
 		int x_set_parent = findMST(parent, x);
 		int y_set_parent = findMST(parent, y);
-		//make x as parent of y
+
 		parent[y_set_parent] = x_set_parent;
 	}
 
-	//Funcao: 
-	//Entrada: 
-	//Saida: 
-	//Pre-condicao: 
-	//Pos-condicao: 
+	//Funcao: calcula a arvore minima geradora(MST) utilizando o algoritmo de kruskal
+	//Entrada: nenhuma
+	//Saida: nenhuma
+	//Pre-condicao: grafo não orientado e populado
+	//Pos-condicao: deve ser printado os vertices que compoe a arvore minima geradora(MST) e o total dos pesos
 	public void kruskalMST(){
-
-		ArrayList<Edge> edges = new ArrayList<>();
 		ArrayList<Edge> mst = new ArrayList<>();
 
-		for(int i=0;i<numVertex;i++){
-			for(int j=0;j<nos.get(i).incidencias.size();j++){
-				Edge edge = new Edge(nos.get(i).nome, nos.get(i).incidencias.get(j).no.nome, nos.get(i).incidencias.get(j).peso);
-				if(!nos.get(i).incidencias.get(j).duplicate){
-					edges.add(edge);
+		if(!orientado){
+
+			ArrayList<Edge> edges = new ArrayList<>();
+
+			for(int i=0;i<numVertex;i++){
+				for(int j=0;j<nos.get(i).incidencias.size();j++){
+					Edge edge = new Edge(nos.get(i).nome, nos.get(i).incidencias.get(j).no.nome, nos.get(i).incidencias.get(j).peso);
+					if(!nos.get(i).incidencias.get(j).duplicate){
+						edges.add(edge);
+					}
 				}
 			}
-		}
 
-		PriorityQueue<Edge> pq = new PriorityQueue<>(edges.size(), Comparator.comparingInt(o -> o.weight));
-		
-		for (int i = 0; i <edges.size() ; i++) {
-			pq.add(edges.get(i));
-		}
-		
-		int [] parent = new int[numVertex];
-		for (int i = 0; i <numVertex ; i++) {
-			parent[i] = i;
-		}
-
-		int index = 0;
-		while(index<numVertex-1){
-			Edge edge = pq.remove();
-			//check if adding this edge creates a cycle
-			int x_set = findMST(parent, Integer.parseInt(edge.source));
-			int y_set = findMST(parent, Integer.parseInt(edge.destination));
-
-			if(x_set==y_set){
-				//ignore, will create cycle
-			}else {
-				//add it to our final result
-				mst.add(edge);
-				index++;
-				union(parent,x_set,y_set);
+			PriorityQueue<Edge> pq = new PriorityQueue<>(edges.size(), Comparator.comparingInt(o -> o.weight));
+			
+			for (int i = 0; i <edges.size() ; i++) {
+				pq.add(edges.get(i));
 			}
+			
+			//inicializa um vetor de ponteiros com os proprios indices
+			int[] parent = new int[numVertex];
+			for (int i = 0; i <numVertex ; i++) {
+				parent[i] = i;
+			}
+
+			int index = 0;
+			while(index<numVertex-1){
+				Edge edge = pq.remove();
+				
+				// checa se cria ciclo
+				int x = findMST(parent, Integer.parseInt(edge.source));
+				int y = findMST(parent, Integer.parseInt(edge.destination));
+
+				if(x!=y){
+					mst.add(edge);
+					index++;
+					union(parent,x,y);
+				}
+			}
+
+			printGraph(mst);
+
+		}else{
+			System.out.println("Erro, o grafo precisa ser não orientado!");
 		}
-
-		System.out.println("before");
-		printGraph(edges);
-
-		System.out.println("after");
-		printGraph(mst);
-
 	}
 }
