@@ -87,19 +87,21 @@ public class Grafo{
 
 	public void buscaLargura(LinkedList<No> fila) throws Exception{
 		No aux = fila.poll();
-		
+
 		if(aux != null && aux.visitado == -1){
 			aux.visitado = 0;
 	
 			System.out.print("["+ aux.nome + "] -> ");
 
 			for(Incidencia in : aux.incidencias){
-				if(in.no != null) fila.offer(in.no);
+				if(in.no != null && !fila.contains(in.no)){
+					fila.offer(in.no);
+				}
 			}
-
+			
 			buscaLargura(fila);
-			aux.visitado = 1;
 		}
+		aux.visitado = 1;
 	}
 
 	public void inicializaCaminhos(No src){
@@ -113,11 +115,10 @@ public class Grafo{
 		No aux = find(nome);
 		LinkedList<No> fila = new LinkedList<No>();
 		fila.offer(aux);
-
 		bellmanFord(fila);
 
 		for(No no : nos){
-			if(aux.caminhos.get(no) < 10000 && aux.caminhos.get(no) > 0)
+			//if(aux.caminhos.get(no) < 10000 && aux.caminhos.get(no) > 0)
 				System.out.println("No: " + no.nome + "          Distancia: " + aux.caminhos.get(no));
 		}
 	}
@@ -130,18 +131,26 @@ public class Grafo{
 			inicializaCaminhos(aux);
 
 			for(Incidencia incidencia : aux.incidencias){
-				aux.caminhos.put(incidencia.no,incidencia.peso);
-				fila.offer(incidencia.no);
+				if(incidencia.no != null){
+					aux.caminhos.put(incidencia.no,incidencia.peso);
+					if(!fila.contains(incidencia.no)){
+						fila.offer(incidencia.no);
+					}
+				}
 			}
 			bellmanFord(fila);
-			aux.visitado = 1;
 		}
+		aux.visitado = 1;
 
 		for(Incidencia incidencia : aux.incidencias){
 			No inc = incidencia.no;
 			for(No no : nos){
-				if(!inc.nome.equals(no.nome) && ((inc.caminhos.get(no)+aux.caminhos.get(inc)) < aux.caminhos.get(no)))
-					aux.caminhos.put(no,inc.caminhos.get(no)+aux.caminhos.get(inc));
+				if(inc.caminhos.get(no) != inc.infinito && !no.nome.equals(aux.nome)){
+					if((aux.caminhos.get(inc) + inc.caminhos.get(no)) < aux.caminhos.get(no)){
+						aux.caminhos.remove(no);
+						aux.caminhos.put(no,aux.caminhos.get(inc) + inc.caminhos.get(no));
+					}
+				}
 			}
 		}
 	}
@@ -184,7 +193,11 @@ public class Grafo{
 		writer.close();
 
 		Runtime rt = Runtime.getRuntime();
+<<<<<<< HEAD
 		Process proc = rt.exec("dot -T png G.dot -o G.png");
+=======
+		rt.exec("dot -T png G.dot -o G.png");
+>>>>>>> a2c7caaea66b111ac54384d6ef48a16110a01b28
 
 		rt.exec("clear");
 		rt.exec("xdg-open G.png");

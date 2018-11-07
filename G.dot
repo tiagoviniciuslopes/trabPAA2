@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 graph G {
 rankdir=LR
 	0 -- 1 [label="11
@@ -10,4 +11,18 @@ rankdir=LR
 'e'"];
 	4 -- 2 [label="19
 'd'"];
+=======
+digraph G {
+rankdir=LR
+	0 -> 1 [label="11
+'a'"];
+	1 -> 3 [label="-5
+"];
+	2 -> 4 [label="7
+'hh'"];
+	3 -> 2 [label="8
+'k'"];
+	4 -> 2 [label="19
+"];
+>>>>>>> a2c7caaea66b111ac54384d6ef48a16110a01b28
 }

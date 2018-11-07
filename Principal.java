@@ -104,9 +104,9 @@ public class Principal{
         } catch (Exception e){
             System.out.println(e.getMessage());
         } finally {
-            br.close(); 
-            return grafo; 
+            br.close();
         }
+        return grafo; 
     }
 
     private static void menu() throws Exception{ 
@@ -160,11 +160,8 @@ public class Principal{
 
                 case "2":
                     grafo.geraDot();
-
-                    System.out.println("\nGrafo gerado!");
+                    System.out.println("Grafo gerado!");
                     reader.readLine();
-                    // https://www.youtube.com/watch?v=Ti2Br2Pq_A4
-                    // https://github.com/nidi3/graphviz-java
                     break;
 
                 case "3":
@@ -209,9 +206,21 @@ public class Principal{
                     break;
 
                 case "6":
+                    
+                    System.out.println("Vertice Origem: ");
+                    vertex = reader.readLine().trim();
+
+                    System.out.println("\n|- KRUSKAL -|\n");
+                    //grafo.kruskal();
+                    
+                    System.out.println("\n\nPressione qualquer tecla para continuar...");
+                    reader.readLine();
                     break;
 
                 case "7":
+
+                    System.out.println("\n\nPressione qualquer tecla para continuar...");
+                    reader.readLine();
                     break;
 
                 case "0":
