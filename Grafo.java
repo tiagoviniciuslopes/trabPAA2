@@ -90,18 +90,18 @@ public class Grafo{
 
 		if(aux != null && aux.visitado == -1){
 			aux.visitado = 0;
-	
 			System.out.print("["+ aux.nome + "] -> ");
 
 			for(Incidencia in : aux.incidencias){
-				if(in.no != null && !fila.contains(in.no)){
+				if(!fila.contains(in.no)){
 					fila.offer(in.no);
 				}
 			}
 			
-			buscaLargura(fila);
+			
 		}
-		aux.visitado = 1;
+		if(fila!=null && aux!=null) buscaLargura(fila);
+		if (aux!=null )aux.visitado = 1;
 	}
 
 	public void inicializaCaminhos(No src){
@@ -138,17 +138,19 @@ public class Grafo{
 					}
 				}
 			}
-			bellmanFord(fila);
 		}
-		aux.visitado = 1;
+		if(fila!=null && aux!=null) bellmanFord(fila);
+		if(aux!=null){
+			aux.visitado = 1;
 
-		for(Incidencia incidencia : aux.incidencias){
-			No inc = incidencia.no;
-			for(No no : nos){
-				if(inc.caminhos.get(no) != inc.infinito && !no.nome.equals(aux.nome)){
-					if((aux.caminhos.get(inc) + inc.caminhos.get(no)) < aux.caminhos.get(no)){
-						aux.caminhos.remove(no);
-						aux.caminhos.put(no,aux.caminhos.get(inc) + inc.caminhos.get(no));
+			for(Incidencia incidencia : aux.incidencias){
+				No inc = incidencia.no;
+				for(No no : nos){
+					if(inc.caminhos.get(no) != inc.infinito && !no.nome.equals(aux.nome)){
+						if((aux.caminhos.get(inc) + inc.caminhos.get(no)) < aux.caminhos.get(no)){
+							aux.caminhos.remove(no);
+							aux.caminhos.put(no,aux.caminhos.get(inc) + inc.caminhos.get(no));
+						}
 					}
 				}
 			}
@@ -193,11 +195,7 @@ public class Grafo{
 		writer.close();
 
 		Runtime rt = Runtime.getRuntime();
-<<<<<<< HEAD
 		Process proc = rt.exec("dot -T png G.dot -o G.png");
-=======
-		rt.exec("dot -T png G.dot -o G.png");
->>>>>>> a2c7caaea66b111ac54384d6ef48a16110a01b28
 
 		rt.exec("clear");
 		rt.exec("xdg-open G.png");
