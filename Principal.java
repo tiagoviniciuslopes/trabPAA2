@@ -3,6 +3,11 @@ import java.util.*;
 
 public class Principal{
 
+    //Funcao: carrega um grafo que esta dentro de um arquivo
+	//Entrada: o nome do arquivo onde o grafo esta armazenado
+	//Saida: o grafo gerado com base no arquivo
+	//Pre-condicao: o arquivo deve existir
+	//Pos-condicao: o grafo deve ser gerado
     public static Grafo carregar_grafo(String arquivo) throws Exception{
         BufferedReader br = new BufferedReader(new FileReader(arquivo));
         
@@ -109,6 +114,11 @@ public class Principal{
         return grafo; 
     }
 
+    //Funcao: apresenta um menu inicial ao usuario
+	//Entrada: 
+	//Saida: 
+	//Pre-condicao: 
+	//Pos-condicao: o menu eh exibido
     private static void menu() throws Exception{ 
 
         Grafo grafo = new Grafo();
@@ -147,7 +157,7 @@ public class Principal{
                         
                     // so pra n ter q escrever o nome toda hr                
                     if(arq.isEmpty()){
-                        arq = "grafo1.txt";//entrar com o teste
+                        arq = "grafo9.txt";//entrar com o teste
                     }
 
                     grafo = new Grafo();
@@ -207,12 +217,10 @@ public class Principal{
 
                 case "6":
                     
-                    System.out.println("Vertice Origem: ");
-                    vertex = reader.readLine().trim();
-
-                    System.out.println("\n|- KRUSKAL -|\n");
-                    //grafo.kruskal();
+                    System.out.println("\n|- KRUSKAL MST-|\n");
                     
+                    grafo.kruskalMST();
+
                     System.out.println("\n\nPressione qualquer tecla para continuar...");
                     reader.readLine();
                     break;
@@ -234,6 +242,11 @@ public class Principal{
         }
     }
 
+    //Funcao: inicia o programa
+	//Entrada: 
+	//Saida: 
+	//Pre-condicao: 
+	//Pos-condicao: o programa eh iniciado 
     public static void main(String args[]) throws Exception{
         menu();
     }
